@@ -1,0 +1,6 @@
+@CAPGEMINI_CROPDEAL_HostAddress = http://localhost:5083
+
+GET {{CAPGEMINI_CROPDEAL_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
