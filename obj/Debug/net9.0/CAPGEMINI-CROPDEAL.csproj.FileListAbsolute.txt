@@ -178,3 +178,4 @@ C:\Users\91843\OneDrive\Desktop\CAPGEMINI-CROPDEAL\bin\Debug\net9.0\ExcelNumberF
 C:\Users\91843\OneDrive\Desktop\CAPGEMINI-CROPDEAL\bin\Debug\net9.0\RBush.dll
 C:\Users\91843\OneDrive\Desktop\CAPGEMINI-CROPDEAL\bin\Debug\net9.0\SixLabors.Fonts.dll
 C:\Users\91843\OneDrive\Desktop\CAPGEMINI-CROPDEAL\bin\Debug\net9.0\System.IO.Packaging.dll
+C:\Users\91843\OneDrive\Desktop\CAPGEMINI-CROPDEAL\obj\Debug\net9.0\CAPGEMINI-CROPDEAL.sourcelink.json

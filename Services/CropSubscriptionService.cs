@@ -1,7 +1,7 @@
 using CAPGEMINI_CROPDEAL.Data;
 using CAPGEMINI_CROPDEAL.Models;
 
-public class CropSubscriptionService
+public class CropSubscriptionService : ICropSubscriptionService
 {
     private readonly CropDealDbContext _context;
 

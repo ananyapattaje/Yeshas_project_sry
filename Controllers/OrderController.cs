@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 [Route("api/orders")]
 public class OrderController : ControllerBase
 {
-    private readonly OrderService _orderService;
+    private readonly IOrderService _orderService;
     private readonly CropDealDbContext _context;
 
-    public OrderController(OrderService orderService,CropDealDbContext context)
+    public OrderController(IOrderService orderService, CropDealDbContext context)
     {
         _orderService = orderService;
         _context = context;

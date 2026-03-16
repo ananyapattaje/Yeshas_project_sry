@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 [Route("api/payments")]
 public class PaymentController : ControllerBase
 {
-    private readonly PaymentService _paymentService;
+    private readonly IPaymentService _paymentService;
     private readonly CropDealDbContext _context;
 
-    public PaymentController(PaymentService paymentService,CropDealDbContext context)
+    public PaymentController(IPaymentService paymentService, CropDealDbContext context)
     {
         _paymentService = paymentService;
         _context = context;
@@ -22,7 +22,6 @@ public class PaymentController : ControllerBase
     public async Task<IActionResult> Pay(int orderId)
     {
         var result = await _paymentService.PayForOrder(orderId);
-
         return Ok(result);
     }
 
@@ -30,15 +29,13 @@ public class PaymentController : ControllerBase
     [HttpGet("farmer-receipts")]
     public async Task<IActionResult> GetFarmerReceipts()
     {
-          
-
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         var farmer = await _context.Farmers
             .FirstOrDefaultAsync(f => f.UserId == userId);
 
-        if (farmer == null)return NotFound("Farmer not found");
-        
+        if (farmer == null) return NotFound("Farmer not found");
+
         var receipts = await _context.Invoices
             .Where(i => i.Order!.FarmerId == farmer.FarmerId)
             .Select(i => new

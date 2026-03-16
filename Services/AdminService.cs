@@ -1,7 +1,8 @@
 using CAPGEMINI_CROPDEAL.Data;
 using Microsoft.EntityFrameworkCore;
 using ClosedXML.Excel;
-public class AdminService
+
+public class AdminService : IAdminService
 {
     private readonly CropDealDbContext _context;
 
@@ -33,9 +34,9 @@ public class AdminService
 
         await _context.SaveChangesAsync();
     }
+
     public async Task<List<FarmerPerformanceDto>> GetFarmerPerformance()
-    {      
-        
+    {
         var result = await _context.Farmers
             .Select(f => new FarmerPerformanceDto
             {
@@ -47,6 +48,7 @@ public class AdminService
 
         return result;
     }
+
     public byte[] GenerateExcel(List<FarmerPerformanceDto> data)
     {
         using var workbook = new XLWorkbook();
@@ -71,5 +73,4 @@ public class AdminService
 
         return stream.ToArray();
     }
-    
 }

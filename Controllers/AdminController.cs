@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/admin")]
 public class AdminController : ControllerBase
 {
-    private readonly AdminService _service;
+    private readonly IAdminService _service;
 
-    public AdminController(AdminService service)
+    public AdminController(IAdminService service)
     {
         _service = service;
     }
@@ -26,6 +26,7 @@ public class AdminController : ControllerBase
         await _service.DeactivateFarmer(id);
         return Ok("Farmer Deactivated");
     }
+
     [HttpGet("farmer-performance-report")]
     public async Task<IActionResult> ExportFarmerPerformance()
     {

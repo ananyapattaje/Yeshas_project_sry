@@ -2,7 +2,7 @@ using CAPGEMINI_CROPDEAL.Data;
 using CAPGEMINI_CROPDEAL.DTO;
 using Microsoft.EntityFrameworkCore;
 
-public class OrderService
+public class OrderService : IOrderService
 {
     private readonly CropDealDbContext _context;
 
@@ -22,8 +22,9 @@ public class OrderService
 
         var totalPrice = crop.CropPrice * dto.Quantity;
 
-        if(dto.Quantity > crop.Quantity)throw new Exception("Not enough crop quantity available");
-        
+        if (dto.Quantity > crop.Quantity)
+            throw new Exception("Not enough crop quantity available");
+
         var order = new Order
         {
             BuyerId = buyerId,

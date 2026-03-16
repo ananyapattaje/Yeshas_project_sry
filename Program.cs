@@ -41,21 +41,20 @@ builder.Services.AddScoped<ICropDeleteService, CropDeleteService>();
 
 builder.Services.AddSingleton<RabbitMQService>();
 builder.Services.AddSingleton<CropEventPublisher>();
-builder.Services.AddScoped<OrderService>();
-builder.Services.AddScoped<CropSubscriptionService>();
-builder.Services.AddScoped<AddCropService>();
-builder.Services.AddScoped<PaymentService>();
-builder.Services.AddScoped<AdminService>();
+
+// CHANGED: register interfaces for easier mocking/testing
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICropSubscriptionService, CropSubscriptionService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddHostedService<CropNotificationConsumer>();
 
-// ✅ Identity without cookie auth schemes
 builder.Services.AddIdentityCore<ApplicationUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CropDealDbContext>()
     .AddDefaultTokenProviders();
 
-// ✅ JWT Authentication — only once
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -72,7 +71,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-// ✅ Swagger with Bearer support
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

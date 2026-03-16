@@ -1,5 +1,3 @@
-using System.Security.Claims;
-using CAPGEMINI_CROPDEAL.Data;
 using CAPGEMINI_CROPDEAL.DTO;
 using CAPGEMINI_CROPDEAL.Interfaces;
 using CAPGEMINI_CROPDEAL.Models;
@@ -12,13 +10,14 @@ namespace CAPGEMINI_CROPDEAL.Controllers;
 public class BuyerController : ControllerBase
 {
     private readonly IUpdateService<Buyer, BuyerDTO> _updateService;
-    private readonly CropSubscriptionService _service;
-    private readonly CropDealDbContext _context;
-    public BuyerController(IUpdateService<Buyer, BuyerDTO> updateService,CropSubscriptionService service,CropDealDbContext context)
+    private readonly ICropSubscriptionService _service;
+
+    public BuyerController(
+        IUpdateService<Buyer, BuyerDTO> updateService,
+        ICropSubscriptionService service)
     {
         _updateService = updateService;
-          _service = service;
-          _context  = context;
+        _service = service;
     }
 
     [HttpPut("{id}")]
@@ -31,15 +30,11 @@ public class BuyerController : ControllerBase
 
         return Ok(updatedBuyer);
     }
-  
 
     [HttpPost("{buyerId}/crop-subscription")]
     public async Task<IActionResult> Subscribe(int buyerId, string cropName)
     {
-        
-
         await _service.Subscribe(buyerId, cropName);
-
         return Ok("Buyer subscribed to crop");
     }
 }
