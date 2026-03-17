@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9mxnVyUbI7k=",
+  "dgSpecHash": "NpTmk1XITEY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\91843\\OneDrive\\Desktop\\CAPGEMINI-CROPDEAL\\CAPGEMINI-CROPDEAL.csproj",
+  "projectFilePath": "C:\\Users\\91843\\Desktop\\CAPGEMINI-CROPDEAL\\CAPGEMINI-CROPDEAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\91843\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\91843\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

@@ -34,8 +34,7 @@ public class FarmerController : ControllerBase
         _deleteService = deleteService;
         _context = context;
     }
-    [HttpGet("ping")]
-    [AllowAnonymous]
+    
 
     [HttpPut("updateprofile")]
     public async Task<IActionResult> UpdateFarmer([FromBody] FarmerDTO dto)
