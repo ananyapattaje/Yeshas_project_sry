@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CAPGEMINI-CROPDEAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e523de2c6ff543e606ea9031cf5528b6d581bda")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d79eb1f62eccb32a34aff39e802b0b0103ae183f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CAPGEMINI-CROPDEAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CAPGEMINI-CROPDEAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

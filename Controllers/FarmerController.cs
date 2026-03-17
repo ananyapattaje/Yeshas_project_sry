@@ -5,6 +5,7 @@ using CAPGEMINI_CROPDEAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace CAPGEMINI_CROPDEAL.Controllers;
@@ -35,7 +36,6 @@ public class FarmerController : ControllerBase
     }
     [HttpGet("ping")]
     [AllowAnonymous]
-    public IActionResult Ping() => Ok("Controller is reachable");
 
     [HttpPut("updateprofile")]
     public async Task<IActionResult> UpdateFarmer([FromBody] FarmerDTO dto)
@@ -55,20 +55,21 @@ public class FarmerController : ControllerBase
     [HttpPost("addcrop")]
     public async Task<IActionResult> AddCrop([FromBody] CropDTO dto)
     {
+        
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var allClaims = User.Claims.Select(c => new { c.Type, c.Value });
-        Console.WriteLine($"UserId from token: {userId}");
-        Console.WriteLine($"All claims: {System.Text.Json.JsonSerializer.Serialize(allClaims)}");
+        // Console.WriteLine($"UserId from token: {userId}");
+        // Console.WriteLine($"All claims: {System.Text.Json.JsonSerializer.Serialize(allClaims)}");
         
-        var farmerCount = await _context.Farmers.CountAsync();
-        Console.WriteLine($"Total farmers in DB: {farmerCount}");
+        // var farmerCount = await _context.Farmers.CountAsync();
+        // Console.WriteLine($"Total farmers in DB: {farmerCount}");
         if (userId == null)return Unauthorized("User not logged in");
         var farmer = await _context.Farmers
             .FirstOrDefaultAsync(f => f.UserId == userId);
 
         if (farmer == null)
             return BadRequest("Farmer not found");
-
+        if(farmer.IsActive == false) throw new Exception("Farmer is InActive");
         await _addcropservice.Add(farmer.FarmerId, dto);
 
         return Ok("The crop was successfully added.");
@@ -83,7 +84,7 @@ public class FarmerController : ControllerBase
 
         if (farmer == null)
             return BadRequest("Farmer not found");
-
+        if(farmer.IsActive == false) throw new Exception("Farmer is InActive");
         Crop? crop = await _updatecropservice.Update(farmer.FarmerId, id, dto);
 
         if (crop == null)
@@ -93,10 +94,29 @@ public class FarmerController : ControllerBase
     }
     [HttpDelete("deletecrop/{cropId}")]
     public async Task<IActionResult> DeleteCrop(int cropId)
+    
     {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        var farmer = await _context.Farmers
+            .FirstOrDefaultAsync(f => f.UserId == userId);
+
+        if (farmer == null)
+            return BadRequest("Farmer not found");
+        if(farmer.IsActive == false) throw new Exception("Farmer is InActive");
+        
+        var crop = await _context.Crops
+            .FirstOrDefaultAsync(c => c.CropId == cropId && c.FarmerId == farmer.FarmerId);
+
+        if (crop == null)
+            return NotFound("Crop not found for this farmer");
+
         await _deleteService.Delete(cropId);
 
         return Ok("Crop deleted successfully");
+        
+
+        
     }
 }
 
